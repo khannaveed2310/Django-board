@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ topic.subject }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar (Optional) -->
+  {% include 'navbar.html' %}
+
+  <!-- Breadcrumb -->
+  <nav class="bg-white border-b border-gray-200">
+  <div class="max-w-6xl mx-auto px-4 py-4">
+    <ol class="flex items-center space-x-2 text-sm text-gray-600">
+      <li>
+        <a href="{% url 'home' %}" class="text-blue-600">Boards</a>
+        <span>/</span>
+      </li>
+      <li>
+        <a href="{% url 'board_topics' topic.board.pk %}" class="text-blue-600">{{ topic.board.name }}</a>
+        <span>/</span>
+      </li>
+      <li class="text-gray-900 font-medium">{{ topic.subject }}</li>
+    </ol>
+  </div>
+</nav>
+
+
+  <!-- Main Content Area -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Your content will go here -->
+    <!-- Example placeholder -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <!-- You can add topic content, posts, replies etc. here -->
+      <h1 class="text-2xl font-bold mb-4">{{ topic.subject }}</h1>
+      <p class="text-gray-700">Content related to the topic will be displayed here.</p>
+    </div>
+  </main>
+
+</body>
+</html>

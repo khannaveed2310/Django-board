@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Django Boards</title>
+    <meta name="description" content="A Django-based forum" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <nav class="bg-gray-900 text-white">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a
+          href="{% url 'home' %}"
+          class="text-xl font-semibold hover:text-gray-300 font-mono"
+        >
+          Django Boards
+        </a>
+
+        {% if user.is_authenticated %}
+        <!-- Authenticated User Dropdown -->
+        <div class="relative">
+          <button
+            id="userMenuButton"
+            onclick="toggleDropdown()"
+            class="flex items-center text-white font-semibold px-4 py-2 rounded hover:bg-gray-700 focus:outline-none"
+          >
+            {{ user.username }}
+            <svg
+              class="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <div
+            id="userDropdown"
+            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50"
+          >
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >My account</a
+            >
+            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >Change password</a
+            >
+            <div class="border-t my-1"></div>
+            <a
+              href="{% url 'logout' %}"
+              class="block px-4 py-2 text-red-600 hover:bg-gray-100"
+              >Log out</a
+            >
+          </div>
+        </div>
+        {% else %}
+        <!-- Not Authenticated -->
+        <div class="flex space-x-4">
+          <a
+            href="{% url 'login'%}"
+            class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition"
+            >Login</a
+          >
+          <a
+            href="{% url 'signup' %}"
+            class="px-4 py-2 bg-green-600 rounded hover:bg-green-700 transition"
+            >Sign Up</a
+          >
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+
+    <script>
+      function toggleDropdown() {
+        const dropdown = document.getElementById("userDropdown");
+        dropdown.classList.toggle("hidden");
+      }
+
+      document.addEventListener("click", function (e) {
+        const button = document.getElementById("userMenuButton");
+        const dropdown = document.getElementById("userDropdown");
+
+        if (button && dropdown && !button.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.add("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>

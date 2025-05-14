@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ board.name }}</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-50">
+    {% include 'navbar.html'%}
+
+    <div class="container max-w-6xl mx-auto py-6 px-4">
+      <!-- Breadcrumbs -->
+      <nav class="bg-white shadow-md rounded-lg p-4">
+        <ol class="flex text-sm text-gray-600 space-x-2">
+          <li class="flex items-center">
+            <a href="/" class="hover:text-blue-500">Boards</a>
+            <svg
+              class="w-3 h-3 mx-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </li>
+          <li class="flex items-center text-gray-800">
+            {% if board.name %}
+            <span>{{ board.name }}</span>
+            {% else %}
+            <span>Id not found</span>
+            {% endif %}
+          </li>
+        </ol>
+      </nav>
+
+      <div class="mb-4 mt-4">
+        <a
+          href="{% url 'new_topics' board.pk %}"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md shadow"
+        >
+          New topic
+        </a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full table-auto bg-white rounded-md shadow">
+          <thead class="bg-gray-800 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left">Topic</th>
+              <th class="px-4 py-2 text-left">Starter</th>
+              <th class="px-4 py-2 text-left">Replies</th>
+              <th class="px-4 py-2 text-left">Views</th>
+              <th class="px-4 py-2 text-left">Last Update</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700 divide-y divide-gray-200">
+            {% for topic in board.topics.all %}
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-2">{{ topic.subject }}</td>
+              <td class="px-4 py-2">{{ topic.starter.username }}</td>
+              <td class="px-4 py-2">0</td>
+              <td class="px-4 py-2">0</td>
+              <td class="px-4 py-2">{{ topic.last_updated }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="px-4 py-4 text-center text-gray-500">
+                No topics found.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

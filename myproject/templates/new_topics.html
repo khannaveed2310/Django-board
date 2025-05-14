@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Start a New Topic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-50 text-gray-800">
+    {% include 'navbar.html' %}
+
+    <div class="container max-w-4xl mx-auto py-6 px-4">
+      <!-- Breadcrumbs -->
+      <nav class="bg-white p-4 rounded-lg shadow">
+        <ol class="flex text-sm text-gray-500 space-x-2 items-center">
+          <li class="flex items-center">
+            <a href="{% url 'home' %}" class="hover:text-blue-500">Boards</a>
+            <svg
+              class="w-3 h-3 mx-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </li>
+          <li class="flex items-center">
+            <a
+              href="{% url 'board_topics' board.pk %}"
+              class="hover:text-blue-500"
+              >{{ board.name }}</a
+            >
+            <svg
+              class="w-3 h-3 mx-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </li>
+          <li class="text-gray-800">New Topic</li>
+        </ol>
+      </nav>
+
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+
+        <!-- Subject Field -->
+        <div>
+          <label
+            for="id_subject"
+            class="block text-sm font-medium text-gray-700 mb-1"
+            >Subject</label
+          >
+          <input
+            type="text"
+            id="id_subject"
+            name="subject"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+
+        <!-- Message Field -->
+        <div>
+          <label
+            for="id_message"
+            class="block text-sm font-medium text-gray-700 mb-1"
+            >Message</label
+          >
+          <textarea
+            id="id_message"
+            name="message"
+            placeholder="What is in your mind?"
+            rows="5"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            required
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md shadow"
+          >
+            Post
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

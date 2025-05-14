@@ -1,0 +1,52 @@
+
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boards</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  {% include 'navbar.html'%}
+
+  <body class="bg-gray-50">
+    <div class="container max-w-6xl mx-auto py-6 px-4">
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-3xl font-semibold text-gray-800">Boards</h1>
+
+        <table class="min-w-full mt-6 table-auto">
+          <thead>
+            <tr class="bg-gray-800 text-white">
+              <th class="px-4 py-2 text-left">Board</th>
+              <th class="px-4 py-2 text-left">Posts</th>
+              <th class="px-4 py-2 text-left">Topics</th>
+              <th class="px-4 py-2 text-left">Last Post</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            {% for board in boards %}
+            <tr class="border-b hover:bg-gray-100">
+              <td class="px-4 py-3">
+                <div onclick="window.location.href='{% url 'board_topics' pk=board.id %}'" class="font-medium cursor-pointer">{{ board.name }}</div>
+
+                {% comment %} <a href= "{% url 'board_topics' board.pk %}">{{board.name}}</a> {% endcomment %}
+              <small class="text-gray-500">{{ board.description }}</small>
+              </td>
+              <td class="px-4 py-3">0</td>
+              <td class="px-4 py-3">0</td>
+              <td class="px-4 py-3"></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
