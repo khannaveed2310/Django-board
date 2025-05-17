@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-gray-600 mb-6">
+        <ol class="flex flex-wrap space-x-2">
+          <li><a href="{% url 'home' %}" class="text-blue-600 hover:underline">Boards</a></li>
+          <span>/</span>
+          <li><a href="{% url 'board_topics' post.topic.board.pk %}" class="text-blue-600 hover:underline">{{ post.topic.board.name }}</a></li>
+          <span>/</span>
+          <li><a href="{% url 'topic_posts' post.topic.board.pk post.topic.pk %}" class="text-blue-600 hover:underline">{{ post.topic.subject }}</a></li>
+          <span>/</span>
+          <li class="text-gray-900 font-medium">Edit post</li>
+        </ol>
+      </nav>
+
+      <!-- Edit Form -->
+      <div class="bg-white shadow rounded-lg p-6">
+        <h1 class="text-2xl font-semibold mb-4">Edit Your Post</h1>
+
+        <form method="post" novalidate class="space-y-4">
+          {% csrf_token %}
+
+          <!-- Message Field -->
+          <div>
+            <label for="id_message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+            <textarea
+              name="message"
+              id="id_message"
+              rows="6"
+              class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >{{ form.message.value|default:post.message }}</textarea>
+
+            {% if form.message.errors %}
+              <p class="text-red-600 text-sm mt-1">{{ form.message.errors }}</p>
+            {% endif %}
+          </div>
+
+          <div class="flex space-x-4">
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded">
+              Save changes
+            </button>
+            <a href="{% url 'topic_posts' post.topic.board.pk post.topic.pk %}" class="border border-gray-300 hover:border-gray-400 text-gray-700 py-2 px-4 rounded">
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
