@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ board.name }}</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -12,7 +11,7 @@
   </head>
 
   <body class="bg-gray-50">
-    {% include 'navbar.html'%}
+    {% include 'navbar.html' %}
 
     <div class="container max-w-6xl mx-auto py-6 px-4">
       <!-- Breadcrumbs -->
@@ -37,14 +36,15 @@
           </li>
           <li class="flex items-center text-gray-800">
             {% if board.name %}
-            <span>{{ board.name }}</span>
+              <span>{{ board.name }}</span>
             {% else %}
-            <span>Id not found</span>
+              <span>Id not found</span>
             {% endif %}
           </li>
         </ol>
       </nav>
 
+      <!-- New Topic Button -->
       <div class="mb-4 mt-4">
         <a
           href="{% url 'new_topics' board.pk %}"
@@ -54,6 +54,7 @@
         </a>
       </div>
 
+      <!-- Topic Table -->
       <div class="overflow-x-auto">
         <table class="min-w-full table-auto bg-white rounded-md shadow">
           <thead class="bg-gray-800 text-white">
@@ -67,10 +68,17 @@
           </thead>
           <tbody class="text-gray-700 divide-y divide-gray-200">
             {% for topic in board.topics.all %}
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-2">{{ topic.subject }}</td>
+            <tr class="hover:bg-gray-100">
+              <td class="px-4 py-2">
+                <a
+                  href="{% url 'topic_posts' pk=board.pk topic_pk=topic.pk %}"
+                  class="  font-medium"
+                >
+                  {{ topic.subject }}
+                </a>
+              </td>
               <td class="px-4 py-2">{{ topic.starter.username }}</td>
-              <td class="px-4 py-2">0</td>
+              <td class="px-4 py-2">{{topic.replies}}</td>
               <td class="px-4 py-2">0</td>
               <td class="px-4 py-2">{{ topic.last_updated }}</td>
             </tr>
